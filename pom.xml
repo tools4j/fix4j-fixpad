@@ -34,6 +34,14 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
@@ -50,13 +58,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!--
-            The problem with using the assembly plugin: The com.javajx.Main class resides in:
-            ${java.home}/lib/ant-javafx.jar.  This does not have a maven pom.  So it it not possible to
-            include this as a maven system dependency.
-
-
-            -->
         </plugins>
     </build>
 
