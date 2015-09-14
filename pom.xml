@@ -7,7 +7,7 @@
     <groupId>org.fix4j</groupId>
     <artifactId>fix4j-fixpad</artifactId>
     <packaging>jar</packaging>
-    <version>0.1</version>
+    <version>0.1-SNAPSHOT</version>
 
     <organization>
         <name>fix4j</name>
@@ -79,12 +79,12 @@
         <dependency>
             <groupId>org.fix4j</groupId>
             <artifactId>fix4j-assert-core</artifactId>
-            <version>0.1</version>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.fix4j</groupId>
             <artifactId>fix4j-assert-fixspec-50sp2</artifactId>
-            <version>0.1</version>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
