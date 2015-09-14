@@ -1,3 +1,4 @@
 **/target
 *.iml
 **/.idea/*
+**/dist/fix4j-fixpad-0.1-executable
