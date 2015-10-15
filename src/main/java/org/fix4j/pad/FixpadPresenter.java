@@ -44,6 +44,7 @@ public class FixpadPresenter implements Initializable {
     @FXML private MenuBar menuBar;
     @Inject private HostServices hostServices;
 
+    private final static String PROMPT = "Put your FIX here...";
     private FixSpecification fixSpecification;
     private final Preferences preferences = Preferences.userRoot().node("fixpad");
 
@@ -52,7 +53,8 @@ public class FixpadPresenter implements Initializable {
         saveFix4jConfigWithFixpadPrefs();
         fixSpecification = FixSpec.INSTANCE;
         textAreaFrom.setWrapText(getIsWordWrapFromJavaFxPreferences());
-
+        textAreaFrom.setText(PROMPT);
+        textAreaFrom.selectAll();
         textAreaFrom.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -62,7 +64,7 @@ public class FixpadPresenter implements Initializable {
     }
 
     public String convertInput(final String textFrom) {
-        if(textFrom == null || textFrom.trim().length() == 0){
+        if(textFrom == null || textFrom.trim().length() == 0 || textFrom.trim().equals(PROMPT)){
             return "";
         }
         try {
