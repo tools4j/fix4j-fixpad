@@ -77,7 +77,8 @@ public class FixpadPresenter implements Initializable {
                 } else {
                     try {
                         final FixMessage message = fixSpecification.parseRawFix(line);
-                        sb.append(message.toPrettyString());
+                        final String messageStr = message.toPrettyString();
+                        sb.append(messageStr);
                     } catch (Exception e) {
                         throw new RuntimeException("Error on line: " + (i + 1), e);
                     }
@@ -110,19 +111,15 @@ public class FixpadPresenter implements Initializable {
 
             } else if (menuId.equals("exampleNos")) {
                 textAreaFrom.setText("35=D|38=1000|59=1|100=N|40=1|11=ORD10001|60=20070123-19:01:17|55=AUD/USD|54=1|");
-                convertInputToOutput();
 
             } else if (menuId.equals("exampleMdr")) {
                 textAreaFrom.setText("35=V|262=request123|263=0|264=20|267=2|269=0|269=1|146=1|55=AUD/USD|");
-                convertInputToOutput();
 
             } else if (menuId.equals("examplePrice")) {
                 textAreaFrom.setText("35=X|262=ABCD|268=4|279=0|269=0|55=AUD/USD|270=1.12345|279=0|269=1|55=AUD/USD|270=1.12355|279=0|269=0|55=AUD/USD|270=1.12335|279=0|269=1|55=AUD/USD|270=1.12365|");
-                convertInputToOutput();
 
             } else if (menuId.equals("exampleExecReport")) {
                 textAreaFrom.setText("35=8|55=CVS|37=ORD10001/03232009|11=ORD10001|17=12345678|150=3|39=2|150=2|54=1|38=1000|40=1|59=1|31=1.12355|32=1000|14=0|6=0|151=0|60=20070123-19:01:17|58=Fill|30=N|207=N|63=0|");
-                convertInputToOutput();
 
             } else if (menuId.equals("about")) {
                 AboutDialog aboutDialog = new AboutDialog(hostServices);
@@ -180,10 +177,6 @@ public class FixpadPresenter implements Initializable {
         });
 
         dialog.show();
-    }
-
-    private void convertInputToOutput() {
-        convertInput(textAreaFrom.getText());
     }
 
     private void setDialogStateDependingOnRegexValidity(final TextInputDialog dialog, final Node okButton, final String delim) {
