@@ -7,7 +7,7 @@
     <groupId>org.fix4j</groupId>
     <artifactId>fix4j-fixpad</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0</version>
 
     <organization>
         <name>fix4j</name>
@@ -50,13 +50,22 @@
                     <archive>
                         <manifestEntries>
                             <JavaFX-Version>2.2</JavaFX-Version>
-                            <JavaFX-Application-Class>org.fix4j.pad.PadMain</JavaFX-Application-Class>
+                            <JavaFX-Application-Class>org.fix4j.pad.Main</JavaFX-Application-Class>
                         </manifestEntries>
                         <manifest>
                             <mainClass>com.javafx.main.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -79,12 +88,17 @@
         <dependency>
             <groupId>org.fix4j</groupId>
             <artifactId>fix4j-assert-core</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.fix4j</groupId>
             <artifactId>fix4j-assert-fixspec-50sp2</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airhacks</groupId>
+            <artifactId>afterburner.fx</artifactId>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 </project>

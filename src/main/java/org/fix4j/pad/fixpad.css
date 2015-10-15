@@ -1,0 +1,67 @@
+.root {
+    -fx-base: #1d1d1d;
+    -fx-background: #1d1d1d;
+    -fx-control-inner-background:  #1d1d1d;
+}
+
+.background{
+    -fx-background-color: #1d1d1d;
+}
+
+.scene{
+    -fx-font: 12pt "Cambria Bold";
+    -fx-color: #e79423;
+}
+
+.text-area{
+    -fx-font-family: Consolas monospace;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.text-area *.content {
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 5;
+}
+
+
+.button:disabled{
+    -fx-background-color: pink;
+}
+
+.button:default{
+    -fx-background-color: darkcyan;
+}
+
+
+.split-pane:horizontal > * > .split-pane-divider {
+    -fx-border-color: transparent -fx-base transparent -fx-base;
+    -fx-background-insets: 0, 0 1 0 1;
+}
+
+.menu-bar {
+    -fx-background-color: derive(-fx-base,30%);
+}
+
+.menu-item {
+    -fx-background-color: derive(-fx-base,30%);
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused {
+    -fx-background-color: darkgray;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: black;
+}
