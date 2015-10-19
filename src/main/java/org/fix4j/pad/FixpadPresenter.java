@@ -139,7 +139,7 @@ public class FixpadPresenter implements Initializable {
         dialog.setTitle("Fix Delimiter");
         dialog.setHeaderText("Please enter a fix delimiter");
         dialog.setContentText("Delimiter must be a valid regex:");
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("pad.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("fixpad.css").toExternalForm());
 
         final ButtonType defaultButtonType = new ButtonType("Reset");
         final ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
