@@ -8,9 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <?import javafx.scene.control.SeparatorMenuItem?>
-<AnchorPane fx:controller="org.fix4j.pad.FixpadPresenter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-    <children>
-        <MenuBar fx:id="menuBar" layoutY="-1.0" prefHeight="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:controller="org.fix4j.pad.FixpadPresenter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+    <top>
+        <MenuBar fx:id="menuBar" layoutY="-1.0" prefHeight="30.0">
             <menus>
                 <Menu fx:id="fixpadMenu" mnemonicParsing="false" onAction="#handleMenuClick" text="Options">
                     <items>
@@ -30,7 +32,9 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <SplitPane dividerPositions="0.29797979797979796" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" AnchorPane.bottomAnchor="0.0">
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.29797979797979796">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
@@ -44,5 +48,5 @@
                 </AnchorPane>
             </items>
         </SplitPane>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>
