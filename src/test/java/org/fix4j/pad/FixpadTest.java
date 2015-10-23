@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.fix4j.pad.ContainsStringMatcher.containsText;
+import static org.fix4j.pad.NotContainsStringMatcher.doesNotContainText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.loadui.testfx.Assertions.verifyThat;
@@ -68,13 +69,13 @@ public class FixpadTest extends GuiTest {
     public void testErrorMessages() {
         final TextArea textAreaFrom = find("#textAreaFrom");
         textAreaFrom.setText("blah");
-        verifyThat("#textAreaTo", containsText("Error on line: 1"));
+        verifyThat("#textAreaTo", containsText("Error on line:"));
 
         textAreaFrom.setText("35=D");
         verifyThat("#textAreaTo", containsText("NewOrderSingle"));
 
         textAreaFrom.setText("35=D^A38=");
-        verifyThat("#textAreaTo", containsText("Error on line: 1"));
+        verifyThat("#textAreaTo", containsText("Error on line:"));
 
         textAreaFrom.setText("35=D^A38=1000");
         verifyThat("#textAreaTo", containsText("NewOrderSingle"));
@@ -127,15 +128,19 @@ public class FixpadTest extends GuiTest {
     public void testExamples() {
         clickMenu("#exampleNos");
         verifyThat("#textAreaFrom", hasText(FixpadPresenter.EXAMPLE_NOS));
+        verifyThat("#textAreaTo", doesNotContainText("Error on line:"));
 
         clickMenu("#exampleMdr");
         verifyThat("#textAreaFrom", hasText(FixpadPresenter.EXAMPLE_MDR));
+        verifyThat("#textAreaTo", doesNotContainText("Error on line:"));
 
         clickMenu("#examplePrice");
         verifyThat("#textAreaFrom", hasText(FixpadPresenter.EXAMPLE_PRICE));
+        verifyThat("#textAreaTo", doesNotContainText("Error on line:"));
 
         clickMenu("#exampleExecReport");
         verifyThat("#textAreaFrom", hasText(FixpadPresenter.EXAMPLE_EXEC_REPORT));
+        verifyThat("#textAreaTo", doesNotContainText("Error on line:"));
     }
 
     private void clickMenu(final String menuItem) {
