@@ -88,8 +88,14 @@ public class FixpadPresenter implements Initializable {
                 e = e.getCause();
                 errorMessage = errorMessage + "\n" + e.getMessage();
             }
+            e.printStackTrace();
+            log(errorMessage);
             return errorMessage;
         }
+    }
+
+    private void log(final String errorMessage) {
+        System.out.println(errorMessage);
     }
 
     public void handleMenuClick(ActionEvent actionEvent) throws IOException {

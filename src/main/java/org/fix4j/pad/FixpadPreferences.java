@@ -40,7 +40,7 @@ public class FixpadPreferences {
     }
 
     public String getFixDelimiter(){
-        return ApplicationProperties.Singleton.instance().getAsString(PropertyKeysAndDefaultValues.FIX_FIELD_DELIM);
+        return preferences.get(FIXPAD_PREF_FIX_FIELD_DELIMITER, getDefaultDelimiter());
     }
 
     private void saveFixDelimiterIntoFix4jProperties(){

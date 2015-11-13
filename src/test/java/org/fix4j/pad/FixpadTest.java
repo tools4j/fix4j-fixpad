@@ -70,14 +70,10 @@ public class FixpadTest extends GuiTest {
         final TextArea textAreaFrom = find("#textAreaFrom");
         textAreaFrom.setText("blah");
         verifyThat("#textAreaTo", containsText("Error on line:"));
+        verifyThat("#textAreaTo", containsText("Cannot parse field 'blah' in expression:blah"));
 
         textAreaFrom.setText("35=D");
-        verifyThat("#textAreaTo", containsText("NewOrderSingle"));
-
-        textAreaFrom.setText("35=D^A38=");
-        verifyThat("#textAreaTo", containsText("Error on line:"));
-
-        textAreaFrom.setText("35=D^A38=1000");
+        verifyThat("#textAreaTo", doesNotContainText("Error on line"));
         verifyThat("#textAreaTo", containsText("NewOrderSingle"));
     }
 
