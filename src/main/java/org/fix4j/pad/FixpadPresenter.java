@@ -47,6 +47,7 @@ public class FixpadPresenter implements Initializable {
 
     @Override
     public void initialize(final URL url, final ResourceBundle resourceBundle) {
+        preferences.saveFixDelimiterFromJavaSavedPreferencesIntoFix4jProperties();
         fixSpecification = FixSpec.INSTANCE;
         textAreaFrom.setWrapText(preferences.getIsWordWrap());
         textAreaFrom.setText(PROMPT);

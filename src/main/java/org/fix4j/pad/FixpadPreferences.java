@@ -32,7 +32,7 @@ public class FixpadPreferences {
         } else {
             preferences.put(FIXPAD_PREF_FIX_FIELD_DELIMITER, delim);
         }
-        saveFixDelimiterIntoFix4jProperties();
+        saveFixDelimiterFromJavaSavedPreferencesIntoFix4jProperties();
     }
 
     public String getDefaultDelimiter(){
@@ -43,7 +43,7 @@ public class FixpadPreferences {
         return preferences.get(FIXPAD_PREF_FIX_FIELD_DELIMITER, getDefaultDelimiter());
     }
 
-    private void saveFixDelimiterIntoFix4jProperties(){
+    public void saveFixDelimiterFromJavaSavedPreferencesIntoFix4jProperties(){
         final String customDelimiter = preferences.get(FIXPAD_PREF_FIX_FIELD_DELIMITER, null);
         final Map<String, String> customProperties;
         if(customDelimiter != null && customDelimiter.length() > 0){
