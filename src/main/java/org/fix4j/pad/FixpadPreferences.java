@@ -17,6 +17,8 @@ public class FixpadPreferences {
     public static final String FIXPAD_PREF_FIX_FIELD_DELIMITER = "fixpad.fixFieldDelimiter";
     public static final String FIXPAD_PREF_WORD_WRAP_FROM_TEXT = "fixpad.wordWrapFromText";
     private final java.util.prefs.Preferences preferences = java.util.prefs.Preferences.userRoot().node("fixpad");
+    private String searchText;
+    private String replaceText;
 
     public boolean getIsWordWrap(){
         return preferences.getBoolean(FIXPAD_PREF_WORD_WRAP_FROM_TEXT, false);
@@ -57,5 +59,13 @@ public class FixpadPreferences {
 
     public void resetDefaultFixDelimiter() {
         setFixDelimiter(getDefaultDelimiter());
+    }
+
+    public void setSearchText(final String searchText) {
+        this.searchText = searchText;
+    }
+
+    public void setReplaceText(final String replaceText) {
+        this.replaceText = replaceText;
     }
 }

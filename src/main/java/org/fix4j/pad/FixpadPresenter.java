@@ -8,17 +8,23 @@ import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 import org.fix4j.spec.fix50sp2.FixSpec;
 import org.fix4j.test.fixmodel.FixMessage;
 import org.fix4j.test.fixspec.FixSpecification;
+import org.fix4j.test.plumbing.Consumer;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -160,10 +166,10 @@ public class FixpadPresenter implements Initializable {
 
         final TextField textField = dialog.getEditor();
 
-        setDialogStateDependingOnRegexValidity(dialog, okButton, textField.getText().trim());
+        setDelimiterDialogStateDependingOnRegexValidity(dialog::setContentText, okButton, textField.getText().trim());
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            setDialogStateDependingOnRegexValidity(dialog, okButton, newValue.trim());
+            setDelimiterDialogStateDependingOnRegexValidity(dialog, okButton, newValue.trim());
         });
 
         defaultButton.addEventFilter(EventType.ROOT, e -> {
@@ -172,7 +178,7 @@ public class FixpadPresenter implements Initializable {
                 final String defaultDelim = preferences.getDefaultDelimiter();
                 textField.setText(defaultDelim);
                 preferences.setFixDelimiter(defaultDelim);
-                setDialogStateDependingOnRegexValidity(dialog, okButton, textField.getText().trim());
+                setDelimiterDialogStateDependingOnRegexValidity(dialog, okButton, textField.getText().trim());
             }
         });
 
@@ -186,18 +192,89 @@ public class FixpadPresenter implements Initializable {
         dialog.show();
     }
 
+    private void handleMenuClick_setCleanupRegex(final ActionEvent actionEvent) {
+        Dialog<Pair<String,String>> dialog = new Dialog<>();
+        dialog.setTitle("Text Cleanup");
+
+        final ButtonType clearButtonType = new ButtonType("Clear");
+        final ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        final ButtonType cancelButtonType = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        final TextField searchText = new TextField();
+        searchText.setPromptText("Search regex");
+        final TextField replaceText = new TextField();
+        replaceText.setPromptText("Replace expression");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(0, 10, 0, 10));
+
+        grid.add(new Label("Search:"), 0, 0);
+        grid.add(searchText, 1, 0);
+        grid.add(new Label("Replace:"), 0, 1);
+        grid.add(replaceText, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Request focus on the username field by default.
+        Platform.runLater(searchText::requestFocus);
+
+        dialog.getDialogPane().getButtonTypes().setAll(clearButtonType, okButtonType, cancelButtonType);
+
+        final Node clearButton = dialog.getDialogPane().lookupButton(clearButtonType);
+        final Node okButton = dialog.getDialogPane().lookupButton(okButtonType);
+        final Node cancelButton = dialog.getDialogPane().lookupButton(cancelButtonType);
+
+        clearButton.setId("dialogClearButton");
+        okButton.setId("dialogOkButton");
+        cancelButton.setId("dialogCancelButton");
+
+        searchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            setDelimiterDialogStateDependingOnRegexValidity(dialog::setContentText, okButton, newValue.trim());
+        });
+
+        searchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            setDelimiterDialogStateDependingOnRegexValidity(dialog::setContentText, okButton, newValue.trim());
+        });
+
+        clearButton.addEventFilter(EventType.ROOT, e -> {
+            if (e.getEventType().equals(ActionEvent.ACTION)) {
+                e.consume();
+                final String defaultDelim = preferences.getDefaultDelimiter();
+                searchText.clear();
+                replaceText.clear();
+                preferences.setSearchText("");
+                preferences.setReplaceText("");
+                setDelimiterDialogStateDependingOnRegexValidity(dialog::setContentText, okButton, searchText.getText().trim());
+            }
+        });
+
+        okButton.addEventFilter(EventType.ROOT, e -> {
+            if (e.getEventType().equals(ActionEvent.ACTION)) {
+                preferences.setSearchText(searchText.getText().trim());
+                preferences.setReplaceText(replaceText.getText().trim());
+                convertInput();
+            }
+        });
+
+        dialog.show();
+
+    }
+
     private void convertInput() {
         textAreaTo.setText(convertInput(textAreaFrom.getText()));
     }
 
-    private void setDialogStateDependingOnRegexValidity(final TextInputDialog dialog, final Node okButton, final String delim) {
+
+    private void setDelimiterDialogStateDependingOnRegexValidity(final Consumer<String> messageConsumer, final Node okButton, final String delim) {
         final String regexCompileError = getRegexCompileError(delim);
         if(regexCompileError != null){
             okButton.setDisable(true);
-            dialog.setContentText("Not a valid regex!! [" + regexCompileError + "]");
+            messageConsumer.accept("Not a valid regex!! [" + regexCompileError + "]");
         } else {
             okButton.setDisable(false);
-            dialog.setContentText("Regex good");
+            messageConsumer.accept("Regex good");
         }
     }
 
